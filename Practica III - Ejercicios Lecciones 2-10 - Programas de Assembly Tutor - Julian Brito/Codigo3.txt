@@ -1,0 +1,33 @@
+SECTION .data
+msg     db      'que onda', 0Ah 
+ 
+SECTION .text
+global  _start
+ 
+_start:
+ 
+    mov     ebx, msg        ; mover hacia EBX
+    mov     eax, ebx        ; mover hacia EAX 
+ 
+nextchar:
+    cmp     byte [eax], 0   ; comparar el byte 
+    jz      finished        ; saltar
+    inc     eax             ; incrementar
+    jmp     nextchar        ; saltar a nextchar
+ 
+finished:
+    sub     eax, ebx        ; substraer 
+                            ; acordarse que ambos registros apuntan hacia la misma
+                            ; pero EAX ha sido incrementado un byte
+                            ; substraer
+                            ; resultado es el numero de segmentos
+ 
+    mov     edx, eax         
+    mov     ecx, msg        
+    mov     ebx, 1
+    mov     eax, 4
+    int     80h
+ 
+    mov     ebx, 0
+    mov     eax, 1
+    int     80h
